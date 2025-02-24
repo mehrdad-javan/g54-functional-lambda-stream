@@ -5,6 +5,8 @@ import se.lexicon.task_app.dao.TaskDao;
 import se.lexicon.task_app.dao.TaskFilter;
 import se.lexicon.task_app.model.Task;
 
+import java.util.function.Consumer;
+
 public class Main {
     public static void main(String[] args) {
         TaskDao taskDao = new TaskDao();
@@ -25,9 +27,9 @@ public class Main {
                 task -> task.setCompleted(true));
 
         System.out.println("---------------------");
-        for (Task task : taskDao.getTasks()) {
-            System.out.println(task);
-        }
+        Consumer<Task> printTaskTitle = t -> System.out.println(t.getTitle());
+        Consumer<Task> printTaskDescription = t -> System.out.println(t);
+        taskDao.getTasks().forEach(printTaskTitle);
 
     }
 }
